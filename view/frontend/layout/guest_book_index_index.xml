@@ -10,6 +10,9 @@
                     <block class="Encomage\GuestBook\Block\Comments" name="guest.book.comments"
                            template="Encomage_GuestBook::comments.phtml"
                            ifconfig="guest_book/guest_book_general/is_active">
+                        <action method="setPagerName">
+                            <argument name="pager_name" xsi:type="string">pager</argument>
+                        </action>
                         <block class="Encomage\GuestBook\Block\Comments" name="guest.book.question.item"
                                template="Encomage_GuestBook::comments/question-item.phtml">
                             <block class="Encomage\GuestBook\Block\Comments\Form" name="guest.book.form"/>

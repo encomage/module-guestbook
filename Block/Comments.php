@@ -165,6 +165,24 @@ class Comments extends Template
     }
 
     /**
+     * @param string $pagerName
+     * @return $this
+     */
+    public function setPagerName($pagerName)
+    {
+        $this->setData('pager_name', $pagerName);
+        return $this;
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getPagerName()
+    {
+        return ($this->hasData('pager_name')) ? (string)$this->getData('pager_name') : false;
+    }
+
+    /**
      * @return mixed
      */
     protected function _getGuestBookQuestionCollection()
@@ -196,11 +214,12 @@ class Comments extends Template
     protected function _prepareLayout()
     {
         parent::_prepareLayout();
+        if ($this->getPagerName()) {
             $list = $this->getLoadedList();
             if ($list) {
                 /** @var $pager \Magento\Theme\Block\Html\Pager */
                 $pager = $this->getLayout()
-                    ->createBlock('Magento\Theme\Block\Html\Pager', 'guest.message.pager')
+                    ->createBlock('Magento\Theme\Block\Html\Pager', $this->getPagerName())
                     ->setTemplate('Magento_Theme::html/pager.phtml')
                     ->setLimit($this->config->getRecordsPerPage())
                     ->setShowPerPage(true)
@@ -209,6 +228,7 @@ class Comments extends Template
                     ->setCurrentPage(1);
                 $this->setChild('pager', $pager);
             }
+        }
         
         return $this;
     }
