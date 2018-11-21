@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Guest Book</title>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <container name="guest.book.container" label="Guest Book" htmlTag="div" htmlClass="book-container">
+                    <block class="Encomage\GuestBook\Block\Comments" name="guest.book.comments"
+                           template="Encomage_GuestBook::comments.phtml"
+                           ifconfig="guest_book/guest_book_general/is_active">
+                        <block class="Encomage\GuestBook\Block\Comments" name="guest.book.question.item"
+                               template="Encomage_GuestBook::comments/question-item.phtml">
+                            <block class="Encomage\GuestBook\Block\Comments\Form" name="guest.book.form"/>
+                        </block>
+                    </block>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

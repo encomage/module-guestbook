@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Encomage_GuestBook::guest_book" parent="Encomage_Core::menu" title="GuestBook"
+             module="Encomage_GuestBook" sortOrder="10" resource="Encomage_GuestBook::guest_book" />
+        <add id="Encomage_GuestBook::guest_book_comments" title="Comments" module="Encomage_GuestBook" sortOrder="10"
+             parent="Encomage_GuestBook::guest_book" action="guest_book/index/index"
+             resource="Encomage_GuestBook::guest_book_comments" />
+        <add id="Encomage_GuestBook::guest_book_settings" title="Settings" module="Encomage_GuestBook" sortOrder="20"
+             parent="Encomage_GuestBook::guest_book" action="adminhtml/system_config/edit/section/guest_book"
+             resource="Encomage_GuestBook::guest_book_settings" />
+    </menu>
+</config>

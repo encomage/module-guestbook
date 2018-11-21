@@ -1,0 +1,22 @@
+<?php
+/** @var $block \Encomage\GuestBook\Block\Comments */
+?>
+<?php echo $block->getPagerHtml(); ?>
+<div class="guest-book-main-button">
+    <button type="button" class="js-show-form" data-logged="<?= $block->isAllowed() ?>">
+        <span><?= /* @escapeNotVerified */ __('Leave a comment'); ?></span>
+    </button>
+    <span class="js-show-message" hidden><?= /* @escapeNotVerified */ __('Only registered users can post comments'); ?></span>
+</div>
+<div class="guest-book-list"></div>
+<div class="question-form">
+    <?= $block->getFormBlock()->toHtml() ?>
+</div>
+<script type="text/x-magento-init">
+        {
+            "*": {
+                "guestBookAnswer": {},
+                "guestBookComments": {"listingAjaxUrl": "<?= /* @escapeNotVerified */ $block->getListingUrl(); ?>"}
+            }
+        }
+</script>

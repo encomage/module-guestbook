@@ -1,0 +1,95 @@
+<?php /** @var $block \Encomage\GuestBook\Block\Comments\Form */ ?>
+<?php
+$customer = $block->getCustomerData();
+$messageId = $block->getMessageId();
+$replyPath = $block->getReplyPath();
+$configHelper = $this->helper('Encomage\GuestBook\Helper\Config');
+?>
+<div class="js-form-container">
+    <div class="guest-book-form">
+        <form class="form" method="post" data-mage-init='{"validation":{}, "guestBookForm": {}}'
+              action="<?= $block->escapeUrl($block->getAddCommentUrl()); ?>">
+            <fieldset class="fieldset">
+                <legend class="legend"><span><?= /* @escapeNotVerified */ __('Leave a Comment'); ?></span></legend>
+                <input type="hidden" name="customer_id"
+                       value="<?= $block->escapeHtml($block->getLoggedInCustomerId()) ?>"/>
+                <?php if ($block->getCustomerData()): ?>
+                    <input type="hidden" name="session_id"
+                           value="<?= $block->escapeHtml($block->getCustomerData()['rp_token']) ?>">
+                <?php endif; ?>
+                <?php if ($messageId) : ?>
+                    <input type="hidden" class="js-show-button" name="message_id"
+                           value="<?= $block->escapeHtml($messageId) ?>"/>
+                <?php endif; ?>
+                <?php if ($replyPath) : ?>
+                    <input type="hidden" class="js-show-button" name="reply_path"
+                           value="<?= $block->escapeHtml($replyPath) ?>"/>
+                <?php endif; ?>
+                <div class="field name required">
+                    <div class="control">
+                        <input name="name" type="text" maxlength="50" placeholder="<?= /* @escapeNotVerified */ __('Name'); ?>"
+                               value="<?= /* @escapeNotVerified */
+                               (!empty($customer)) ? $customer['firstname'] : null; ?>"
+                               class="input-text required  <?= /* @escapeNotVerified */
+                               ($messageId) ? 'name-' . $messageId : 'name'; ?>"/>
+                    </div>
+                </div>
+                <div class="field email required">
+                    <div class="control">
+                        <input name="email" type="email" maxlength="50" placeholder="<?= /* @escapeNotVerified */ __('Email'); ?>"
+                               value="<?= /* @escapeNotVerified */
+                               (!empty($customer)) ? $customer['email'] : null; ?>"
+                               class="input-text required validate-email"/>
+                    </div>
+                </div>
+                <div class="field subject required">
+                    <div class="control">
+                        <input name="subject" type="text" placeholder="<?= /* @escapeNotVerified */ __('Subject'); ?>"
+                               class="input-text required"/>
+                    </div>
+                </div>
+                <div class="field message required js-area-comment-container">
+                    <div class="control">
+                    <textarea name="message" maxlength="<?= $block->escapeHtml($configHelper->getCountMessage()); ?>" placeholder="<?= /* @escapeNotVerified */ __('Enter your comment here..'); ?>"
+                              class="input-text js-comment-area required" cols="5" rows="3"></textarea>
+                        <span class="js-comment"> <?= /* @escapeNotVerified */ __('Number of charts'); ?></span>: <span class="js-comment-area-counter"><?= $block->escapeHtml($configHelper->getCountMessage()); ?></span>
+                    </div>
+                </div>
+                <div class="review-fieldset">
+                    <fieldset class="field required review-field-ratings">
+                        <legend class="label"><span><?= /* @escapeNotVerified */ __('Your Rating') ?></span></legend>
+                        <div class="control">
+                            <div class="nested">
+                                <div class="field choice review-field-rating">
+                                    <div class="control review-control-vote">
+                                        <?php for ($iterator = 1; $iterator < 6; $iterator++) : ?>
+                                            <input class="guest-book-<?= /* @escapeNotVerified */
+                                            $iterator . $messageId ?> radio"
+                                                   name="guest_book_review"
+                                                   type="radio"/>
+                                            <label data-i="<?= /* @escapeNotVerified */
+                                            $iterator ?>" data-click="<?= /* @escapeNotVerified */
+                                            $iterator . $messageId ?>"
+                                                   class="js-click rating-<?= /* @escapeNotVerified */
+                                                   $iterator ?>">
+                                                <span><?= $block->escapeHtml(__('%1 %2', $iterator, $iterator > 1 ? 'stars' : 'star')) ?></span>
+                                            </label>
+                                        <?php endfor; ?>
+                                        <input type="hidden" name="customer_review" class="js-guest-post-rating" disabled="disabled"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </fieldset>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="submit" class="action submit primary">
+                        <span><?= /* @escapeNotVerified */ __('Submit'); ?></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

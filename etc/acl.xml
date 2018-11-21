@@ -1,0 +1,22 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Encomage_GuestBook::guest_book" title="Encomage GuestBook Module"
+                                      translate="title">
+                                <resource id="Encomage_GuestBook::guest_book_comments"
+                                          title="Encomage GuestBook Comments" translate="title" />
+                                <resource id="Encomage_GuestBook::guest_book_settings"
+                                          title="Encomage GuestBook Settings" translate="title" />
+                            </resource>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

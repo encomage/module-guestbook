@@ -1,0 +1,9 @@
+<div class="product-reviews-summary" itemprop="aggregateRating" itemscope>
+    <div class="rating-summary">
+        <div class="rating-result" data-bind="foreach: items">
+            <!-- ko if: name === $parent.initialValue -->
+            <span data-bind="style:{width:val}"></span>
+            <!-- /ko -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,108 @@
+// book-render-answer-item
+div .answer-item {
+  .attribute {
+    margin: 5px;
+    .answer-name {
+      display: inline-block;
+      font-weight: bold;
+    }
+    .answer-create-date {
+      display: inline-block;
+    }
+    .answer-reply-container {
+      display: inline-block;
+      .answer-reply-close {
+        display: none;
+      }
+    }
+
+  }
+  h4 {
+    margin: 5px;
+  }
+  .message{
+    margin: 5px;
+  }
+  .admin-name{
+    font-weight: bold;
+    display: inline-block;
+  }
+  .answer-date{
+    display: inline-block;
+  }
+  .admin-answer{
+    margin-left:20px;
+    font-weight: bold;
+    display: inline-block;
+  }
+}
+
+// book-render-question-item
+
+.post-item{
+  width: 100%;
+  .post-item-container{
+    margin:5px;
+    .post-item-name{
+      font-weight: bold;
+      display: inline-block;
+    }
+    .post-item-date{
+      display: inline-block;
+    }
+    .post-item-reply{
+      display: inline-block;
+    }
+  }
+  h4{
+    margin:5px;
+  }
+  .post-item-message{
+    margin:5px;
+  }
+}
+.admin-answer{
+  margin-left:20px;
+  .admin-name{
+    font-weight: bold;
+    display: inline-block;
+  }
+  .post-item-data{
+    display: inline-block;
+  }
+}
+
+//book-list
+.guest-book-main-button {
+  text-align: right;
+}
+
+.guest-book-list {
+  .post-item {
+    background-color: #EAEAEA;
+  }
+
+  .post-item .approval,.answer-item .approval{
+    display: inline-block;
+    color: red;
+    margin-left: 15px
+  }
+  .answer-item {
+    background-color: #dde9cc;
+  }
+  .admin-answer {
+    background-color: #e9998b;
+  }
+
+  .question-form {
+    margin-top: 20px;
+  }
+}
+
+.guest-book-form {
+  .review-control-vote{
+    label.active:before {
+      opacity: 1;
+    }
+  }
+}

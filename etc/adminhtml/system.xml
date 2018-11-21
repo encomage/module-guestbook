@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="guest_book" translate="label" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Guest Book</label>
+            <tab>encomage</tab>
+            <resource>Encomage_GuestBook::guestbook_settings</resource>
+            <group id="guest_book_general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Guest Book settings</label>
+                <field id="is_active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="message_settings" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Message settings</label>
+                <field id="auto_approv" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Automatical Approving</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="all_guest" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allow Guests</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="records" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Records per Page</label>
+                </field>
+                <field id="sort" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Sort Type</label>
+                    <source_model>Encomage\GuestBook\Model\GuestBook\Source\Sort</source_model>
+                </field>
+                <field id="admin_answer_name" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Administration Name</label>
+                </field>
+                <field id="count_message" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Characters</label>
+                </field>
+            </group>
+            <group id="notify_admin" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>New Pending Comment Notification</label>
+                <field id="recipient" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Recipient</label>
+                    <comment>This will be used in the "To" field</comment>
+                </field>
+                <field id="sender" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                    <comment>This will be used as "From"</comment>
+                </field>
+                <field id="new_comment" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1"
+                       showInStore="1" canRestore="1">
+                    <label>New Comment Notification</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

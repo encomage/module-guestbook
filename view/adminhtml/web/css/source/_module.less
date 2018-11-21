@@ -1,0 +1,41 @@
+.rating-summary {
+  .rating-result {
+    width: 140px;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+  }
+  .rating-result:before {
+    position: absolute;
+    z-index: 2;
+    -webkit-font-smoothing: antialiased;
+    color: #ada9b3;
+    font-size: 30px;
+    width: 100%;
+    letter-spacing: 2px;
+    line-height: 33px;
+    content: '\2605' '\2605' '\2605' '\2605' '\2605';
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+    speak: none
+  }
+  .rating-result > span:before {
+    position: relative;
+    z-index: 2;
+    -webkit-font-smoothing: antialiased;
+    color: #000000;
+    font-size: 30px;
+    letter-spacing: 2px;
+    line-height: 33px;
+    content: '\2605' '\2605' '\2605' '\2605' '\2605';
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+  }
+ .rating-result > span {
+    display: block;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <guest_book>
+            <guest_book_general>
+                <is_active>1</is_active>
+            </guest_book_general>
+            <message_settings>
+                <auto_approv>0</auto_approv>
+                <all_guest>1</all_guest>
+                <records>15</records>
+                <sort>ASC</sort>
+                <count_message>500</count_message>
+                <admin_answer_name>Administration</admin_answer_name>
+            </message_settings>
+            <new_pending_comment_notification>
+                <new_comment_notification>guest_book_notify_admin_new_comment</new_comment_notification>
+            </new_pending_comment_notification>
+        </guest_book>
+    </default>
+</config>

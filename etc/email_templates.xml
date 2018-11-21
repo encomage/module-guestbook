@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="guest_book_notify_admin_new_comment" label="New Comment Notification" file="guest_book_new_comment.html" type="html" module="Encomage_GuestBook" area="frontend"/>
+</config>
