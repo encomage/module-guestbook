@@ -6,6 +6,7 @@ use Magento\Framework\View\Element\Template;
 use Encomage\GuestBook\Api\GuestBookRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SortOrderBuilder;
+use Magento\Framework\Api\SortOrder;
 use Encomage\GuestBook\Helper\Config;
 use Magento\Customer\Model\Session;
 use Encomage\GuestBook\Model\GuestBook\Source\Status;
@@ -118,6 +119,12 @@ class Answer extends Template
             $this->searchCriteriaBuilder->addFilter('statusCustomFilter', null);
         }
         $this->searchCriteriaBuilder->addFilter('onlyAnswer', $this->getMessageId());
+        $this->searchCriteriaBuilder->addSortOrder(
+            $this->sortOrderBuilder
+                ->setField(GuestBook::REPLY_PATH)
+                ->setDirection(SortOrder::SORT_ASC)
+                ->create()
+        );
         $this->searchCriteriaBuilder->addSortOrder($sortOrder);
         $searchCriteria = $this->searchCriteriaBuilder->create();
 
