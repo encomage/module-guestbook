@@ -11,7 +11,7 @@ define([
             form = $('.guest-book-form'),
             listingAjaxUrl = config.listingAjaxUrl,
             commentListContainer = $(document).find('.guest-book-list');
-            //toolbar = $(document).find('.toolbar-number');
+            toolbar = $(document).find('.toolbar-number');
 
         $.ajax({
             url: listingAjaxUrl,
@@ -21,7 +21,7 @@ define([
             showLoader: true,
             success: function (data) {
                 commentListContainer.html(data.html);
-                //toolbar.html(data.count + " " + $.mage.__('Comment(s)'));
+                toolbar.html(data.count + " " + $.mage.__('Comment(s)'));
             }
         });
 
