@@ -1,5 +1,8 @@
 define([
     'jquery',
+    'mage/template',
+    'jquery/ui',
+    'mage/translate',
     "domReady!"
 ], function ($) {
     'use strict';
@@ -7,18 +10,18 @@ define([
         var button = $('.js-show-form'),
             form = $('.guest-book-form'),
             listingAjaxUrl = config.listingAjaxUrl,
-            commentListContainer = $(document).find('.guest-book-list'),
-            toolbar = $(document).find('.toolbar-number');
+            commentListContainer = $(document).find('.guest-book-list');
+            //toolbar = $(document).find('.toolbar-number');
 
         $.ajax({
             url: listingAjaxUrl,
             type: "POST",
             dataType: "json",
-            data: {isAjax: true},
-            loader: true,
+            data: {isAjax: true, page: 3},
+            showLoader: true,
             success: function (data) {
                 commentListContainer.html(data.html);
-                toolbar.html(data.count + " " + $.mage.__('Comment(s)'));
+                //toolbar.html(data.count + " " + $.mage.__('Comment(s)'));
             }
         });
 
@@ -62,7 +65,7 @@ define([
                     method: "POST",
                     dataType: "json",
                     data: {messageId: dataMessageId},
-                    loader: true,
+                    showLoader: true,
                     success: function (response) {
                         $(".answer-" + dataMessageId).html(response.html);
                         $(_this).text($.mage.__('See less'));
