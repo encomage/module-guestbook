@@ -10,14 +10,14 @@ define([
         var button = $('.js-show-form'),
             form = $('.guest-book-form'),
             listingAjaxUrl = config.listingAjaxUrl,
-            commentListContainer = $(document).find('.guest-book-list');
+            commentListContainer = $(document).find('.guest-book-list'),
             toolbar = $(document).find('.toolbar-number');
 
         $.ajax({
             url: listingAjaxUrl,
             type: "POST",
             dataType: "json",
-            data: {isAjax: true, page: 3},
+            data: {isAjax: true},
             showLoader: true,
             success: function (data) {
                 commentListContainer.html(data.html);
