@@ -1,0 +1,83 @@
+<?php
+/** @var \Encomage\GuestBook\Block\Comments\Questions $block */
+/** @var \Encomage\GuestBook\Helper\Config $configHelper */
+?>
+<?php
+$questions = $block->getItems();
+?>
+<?php /** @var \Encomage\GuestBook\Model\GuestBook $question */ ?>
+<?php foreach ($questions as $question): ?>
+    <?php /** @var \Encomage\GuestBook\Block\Comments\Form $formBlock */ ?>
+    <?php $formBlock = $block->getFormBlock()->setMessageId((int)$question->getMessageId()); ?>
+    <div class="post-item">
+        <div class="post-item-container">
+            <div class="post-item-name">
+                <span><?= $block->escapeHtml($question->getName()); ?></span>
+            </div>
+            <div class="post-item-date">
+                <span><?= $block->escapeHtml($question->getCreatedAt()); ?></span>
+            </div>
+            <div class="post-item-reply">
+                <a data-reply-message="<?= (int)$question->getMessageId(); ?>"
+                   class="js-reply-message"><?= /* @escapeNotVerified */
+                    __('Reply'); ?></a>
+            </div>
+            <?php if ($question->getStatus() === Encomage\GuestBook\Model\GuestBook\Source\Status::STATUS_PENDING): ?>
+                <div class="approval">
+                    <?= /* @escapeNotVerified */
+                    __('This post will become public after administrator approval') ?>
+                </div>
+            <?php endif; ?>
+        </div>
+        <h4><?= $block->escapeHtml($question->getSubject()); ?></h4>
+        <div class="post-item-message">
+            <span><?= $block->escapeHtml($question->getMessage()); ?></span>
+        </div>
+        <?php $rating = $question->getCustomerReview() * 20; ?>
+        <div class="product-reviews-summary <?= !$rating ? 'no-rating' : '' ?>"
+             itemprop="aggregateRating">
+            <?php if ($rating): ?>
+                <div class="rating-summary">
+                    <span class="label"><span><?= /* @escapeNotVerified */
+                            __('Rating') ?>:</span></span>
+                    <div class="rating-result"
+                         title="<?= $block->escapeHtmlAttr($rating); ?>%">
+                        <span style="width:<?= $block->escapeHtmlAttr($rating); ?>%"></span>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="js-message-form-container-<?= /* @escapeNotVerified */
+        $question->getMessageId() ?>" hidden="hidden">
+            <?= $formBlock->toHtml() ?>
+        </div>
+    </div>
+    <?php if ($question->getAdminAnswer()): ?>
+        <div class="admin-answer">
+            <?php if ($configHelper->getAdministrationName()): ?>
+                <div class="admin-name">
+                    <?= $block->escapeHtml($configHelper->getAdministrationName()) ?>
+                </div>
+                <div class="post-item-data">
+                    <span><?= $block->escapeHtml($question->getCreatedAt()); ?></span>
+                </div>
+            <?php endif; ?>
+            <div class="message">
+                <?= $block->escapeHtml($question->getAdminAnswer()); ?>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if ($block->hasAnswer((int)$question->getMessageId())): ?>
+        <div>
+            <button data-url="<?= $block->escapeUrl($block->getAnswerUrl()) ?>"
+                    data-message-id="<?= $block->escapeHtml((int)$question->getMessageId()); ?>"
+                    class="see-more"
+                    type="button"><?= /* @escapeNotVerified */
+                __('See More') ?></button>
+        </div>
+    <?php endif ?>
+
+    <div class="answer-<?= /* @escapeNotVerified */
+    (int)$question->getMessageId() ?>"></div>
+<?php endforeach; ?>
+<?= /* @escapeNotVerified */ $block->getPagerHtml(); ?>
