@@ -6,6 +6,7 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\Result\RedirectFactory;
+use Encomage\GuestBook\Block\Comments\Questions;
 
 /**
  * Class Listing
@@ -47,23 +48,17 @@ class Listing extends Action
 
         $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
 
-        $blockContent = $this->_view->getLayout()
-            ->createBlock(\Encomage\GuestBook\Block\Comments::class);
+        $blockContent = $this->_view->getLayout()->createBlock(Questions::class);
 
-        $blockForm = $this->_view->getLayout()
-            ->createBlock(\Encomage\GuestBook\Block\Comments\Form::class, 'guest.book.form');
+        $result = [];
+        $html = $blockContent->toHtml();
 
-        $blockQuestion = $blockContent->setChild('guest.book.form', $blockForm)
-            ->setTemplate("Encomage_GuestBook::comments/question-item.phtml");
-
-        $collection = $blockContent->getLoadedList();
-        $html = '';
-
-        foreach ($collection->getItems() as $item) {
-            $blockQuestion->setQuestion($item);
-            $html .= $blockQuestion->toHtml();
+        if ($html && $blockContent->getPagerBlock()) {
+            $result['currentPage'] = (int)$blockContent->getPagerBlock()->getCurrentPage();
         }
+        $result['html'] = $html;
+        $result['count'] = count($blockContent->getItems());
 
-        return $resultJson->setData(['html' => $html, 'count' => count($collection->getItems())]);
+        return $resultJson->setData($result);
     }
 }

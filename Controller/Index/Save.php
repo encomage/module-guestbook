@@ -104,9 +104,13 @@ class Save extends Action
             $this->messageManager->addExceptionMessage($e, __('Something wrong'));
         }
 
-        return $result->setPath('guest_book');
+        return $result->setPath($this->_redirect->getRefererUrl());
     }
 
+    /**
+     * @param $params
+     * @throws \Exception
+     */
     protected function _validate($params)
     {
         if (!$params || empty($params)) {

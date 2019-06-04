@@ -7,26 +7,40 @@ define([
 ], function ($) {
     'use strict';
     return function (config, element) {
-        var button = $('.js-show-form'),
-            form = $('.guest-book-form'),
+        var form = $('.guest-book-form'),
             listingAjaxUrl = config.listingAjaxUrl,
             commentListContainer = $(document).find('.guest-book-list'),
             toolbar = $(document).find('.toolbar-number');
 
-        $.ajax({
-            url: listingAjaxUrl,
-            type: "POST",
-            dataType: "json",
-            data: {isAjax: true},
-            showLoader: true,
-            success: function (data) {
-                commentListContainer.html(data.html);
-                toolbar.html(data.count + " " + $.mage.__('Comment(s)'));
-            }
+
+        function loadCommentsAjax(url) {
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                data: {isAjax: true},
+                showLoader: true,
+                success: function (data) {
+                    commentListContainer.html(data.html);
+                    toolbar.html(data.count + " " + $.mage.__('Comment(s)'));
+                    if (data.currentPage) {
+                        window.history.pushState('data', 'Title', '?p=' + data.currentPage);
+                    }
+                }
+            });
+        }
+
+        loadCommentsAjax(listingAjaxUrl);
+
+
+        $(document).on('click', '.book-container .pager .pages-items li a', function (e) {
+            let url = $(this).attr('href');
+            loadCommentsAjax(url);
+            e.preventDefault();
         });
 
-        button.on('click', function () {
-            if (button.data('logged')) {
+        $(document).on('click', '.js-show-form', function () {
+            if ($(this).data('logged')) {
                 $('.js-clean-form').html('');
                 scrollTo(form, 7000);
             } else {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Encomage\GuestBook\Block;
+namespace Encomage\GuestBook\Block\Comments;
 
 use Magento\Framework\View\Element\Template;
 use Encomage\GuestBook\Api\GuestBookRepositoryInterface;
@@ -9,14 +9,17 @@ use Encomage\GuestBook\Helper\Config;
 use Magento\Customer\Model\Session;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SortOrderBuilder;
+use Encomage\GuestBook\Block\Comments\Form;
 
 /**
  * Class Comments
  *
  * @package Encomage\GuestBook\Block
  */
-class Comments extends Template
+class Questions extends Template
 {
+    const CURRENT_PAGE_PARAM = 'p';
+
     /**
      * @var GuestBookRepositoryInterface
      */
@@ -73,6 +76,7 @@ class Comments extends Template
         $this->sortOrderBuilder = $sortOrderBuilder;
         $this->config = $config;
         $this->customerSession = $session;
+        $this->setTemplate('Encomage_GuestBook::comments/questions.phtml');
     }
 
     /**
@@ -85,6 +89,14 @@ class Comments extends Template
         }
 
         return $this->loadedCollection;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getItems()
+    {
+        return $this->getLoadedList()->getItems();
     }
 
     /**
@@ -109,18 +121,6 @@ class Comments extends Template
         $collection = $this->guestBookRepository->getList($searchCriteria);
 
         return $collection->getItems();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAllowed()
-    {
-        if ($this->config->isAllowGuests() || $this->customerSession->isLoggedIn()) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -156,12 +156,19 @@ class Comments extends Template
     }
 
     /**
-     * @return bool|\Magento\Framework\View\Element\BlockInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return mixed
+     */
+    public function getPagerBlock()
+    {
+        return $this->getChildBlock('pager');
+    }
+
+    /**
+     * @return bool|\Magento\Framework\View\Element\AbstractBlock
      */
     public function getFormBlock()
     {
-        return $this->getLayout()->getBlock('guest.book.form');
+        return $this->getChildBlock('questions.book.form');
     }
 
     /**
@@ -171,6 +178,7 @@ class Comments extends Template
     public function setPagerName($pagerName)
     {
         $this->setData('pager_name', $pagerName);
+
         return $this;
     }
 
@@ -179,7 +187,7 @@ class Comments extends Template
      */
     public function getPagerName()
     {
-        return ($this->hasData('pager_name')) ? (string)$this->getData('pager_name') : false;
+        return ($this->hasData('pager_name')) ? (string)$this->getData('pager_name') : 'pager';
     }
 
     /**
@@ -214,12 +222,12 @@ class Comments extends Template
     protected function _prepareLayout()
     {
         parent::_prepareLayout();
-        if ($this->getPagerName()) {
+        if ($this->getPagerName() && $this->getConfigHelper()->getRecordsPerPage()) {
             $list = $this->getLoadedList();
             if ($list) {
                 /** @var $pager \Magento\Theme\Block\Html\Pager */
                 $pager = $this->getLayout()
-                    ->createBlock('Magento\Theme\Block\Html\Pager', $this->getPagerName())
+                    ->createBlock('Magento\Theme\Block\Html\Pager', $this->getPagerName() . rand(1, 22))
                     ->setTemplate('Magento_Theme::html/pager.phtml')
                     ->setLimit($this->config->getRecordsPerPage())
                     ->setShowPerPage(true)
@@ -229,7 +237,12 @@ class Comments extends Template
                 $this->setChild('pager', $pager);
             }
         }
-        
+        $this->setChild(
+            'questions.book.form',
+            $this->getLayout()
+                ->createBlock(Form::class)
+        );
+
         return $this;
     }
 }
