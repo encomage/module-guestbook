@@ -4,6 +4,7 @@
 ?>
 <?php
 $questions = $block->getItems();
+$configHelper = $this->helper('Encomage\GuestBook\Helper\Config');
 ?>
 <?php /** @var \Encomage\GuestBook\Model\GuestBook $question */ ?>
 <?php foreach ($questions as $question): ?>
